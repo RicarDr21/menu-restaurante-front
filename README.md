@@ -1,5 +1,24 @@
-# Vue 3 + Vite
+@'
+# Menu Restaurante - Frontend
 
-This template should help get you started developing with Vue 3 in Vite. The template uses Vue 3 `<script setup>` SFCs, check out the [script setup docs](https://v3.vuejs.org/api/sfc-script-setup.html#sfc-script-setup) to learn more.
+Frontend en Vue 3 que consume la API REST del backend (menu-restaurante) para gestionar las resenas de los platos.
 
-Learn more about IDE Support for Vue in the [Vue Docs Scaling up Guide](https://vuejs.org/guide/scaling-up/tooling.html#ide-support).
+Este proyecto es independiente del backend, se conecta a el por HTTP sin modificarlo.
+
+## Que hace
+
+- Muestra el listado de resenas guardadas en MongoDB
+- Permite crear una resena nueva
+- Permite editar una resena existente
+- Permite eliminar una resena
+- Todo se actualiza al instante sin recargar la pagina
+
+## Como funciona
+
+El frontend corre en localhost:5173 y el backend en localhost:3001.
+
+Las peticiones que hace este proyecto a /api/resenas se redirigen automaticamente al backend gracias a un proxy configurado en vite.config.js, asi se evitan problemas de CORS sin tocar el backend.
+
+## Como correrlo
+
+1. Instalar dependencias
