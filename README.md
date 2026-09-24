@@ -22,3 +22,18 @@ Las peticiones que hace este proyecto a /api/resenas se redirigen automaticament
 ## Como correrlo
 
 1. Instalar dependencias
+npm install
+
+
+2. Asegurarse de que el backend (menu-restaurante) este corriendo en el puerto 3001
+
+3. Iniciar el frontend
+npm run dev
+
+
+4. Abrir http://localhost:5173
+
+## Backend relacionado
+
+https://github.com/RicarDr21/menu-restaurante
+'@ | Set-Content -Path README.md -Encoding utf8
