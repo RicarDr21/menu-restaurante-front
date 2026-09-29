@@ -34,3 +34,4 @@ npm run dev
 4. Abrir http://localhost:5173
 
 ## Backend relacionado
+https://github.com/RicarDr21/menu-restaurante
