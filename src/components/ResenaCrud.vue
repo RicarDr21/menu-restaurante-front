@@ -73,21 +73,25 @@ function limpiarFormulario() {
   formulario.value = { platoId: '', nombre: '', comentario: '', calificacion: 5 }
 }
 
+function estrellas(n) {
+  return '⭐'.repeat(n) + '☆'.repeat(5 - n)
+}
+
 onMounted(cargarResenas)
 </script>
 
 <template>
   <div class="pagina">
-    <header class="encabezado">
-      <h1>Reseñas del restaurante</h1>
-      <p class="subtitulo">Gestiona las opiniones de tus clientes sobre cada plato</p>
-    </header>
+    <div class="titulo-seccion">
+      <h2>Opiniones de nuestros clientes</h2>
+      <p class="tagline">Comparte tu experiencia con cada plato</p>
+    </div>
 
     <p v-if="error" class="alerta">{{ error }}</p>
 
     <div class="contenido">
       <form @submit.prevent="guardar" class="formulario">
-        <h2>{{ editandoId ? 'Editar reseña' : 'Nueva reseña' }}</h2>
+        <h3>{{ editandoId ? 'Editar reseña' : 'Nueva reseña' }}</h3>
 
         <label>
           <span>Id del plato</span>
@@ -126,14 +130,14 @@ onMounted(cargarResenas)
       </form>
 
       <section class="listado">
-        <h2>Listado ({{ resenas.length }})</h2>
+        <h3>Reseñas ({{ resenas.length }})</h3>
         <p v-if="cargando" class="mensaje">Cargando...</p>
         <p v-if="!cargando && resenas.length === 0" class="mensaje">No hay reseñas registradas.</p>
 
         <div class="tarjeta" v-for="resena in resenas" :key="resena._id">
           <div class="tarjeta-cabecera">
             <strong>{{ resena.nombre }}</strong>
-            <span class="badge">{{ resena.calificacion }}/5 ⭐</span>
+            <span class="estrellas">{{ estrellas(resena.calificacion) }}</span>
           </div>
           <p class="tarjeta-plato">Plato #{{ resena.platoId }}</p>
           <p class="tarjeta-comentario">{{ resena.comentario }}</p>
@@ -149,31 +153,33 @@ onMounted(cargarResenas)
 
 <style scoped>
 .pagina {
-  max-width: 960px;
+  max-width: 1000px;
   margin: 0 auto;
-  padding: 32px 20px;
-  font-family: system-ui, -apple-system, Segoe UI, sans-serif;
+  padding: 40px 20px 60px;
   text-align: left;
 }
-
-.encabezado {
+.titulo-seccion {
+  text-align: center;
   margin-bottom: 28px;
 }
-.encabezado h1 {
+.titulo-seccion h2 {
+  font-size: 1.9rem;
   margin: 0;
-  font-size: 2rem;
+  color: var(--acento-suave);
 }
-.subtitulo {
-  color: #888;
-  margin-top: 4px;
+.tagline {
+  color: var(--texto-muted);
+  margin-top: 6px;
+  font-style: italic;
 }
 
 .alerta {
-  background: #3a1f1f;
-  color: #ff8a8a;
+  background: rgba(224, 92, 92, 0.15);
+  color: #ff9a9a;
   padding: 10px 14px;
   border-radius: 8px;
   margin-bottom: 20px;
+  text-align: center;
 }
 
 .contenido {
@@ -181,7 +187,6 @@ onMounted(cargarResenas)
   grid-template-columns: 320px 1fr;
   gap: 28px;
 }
-
 @media (max-width: 720px) {
   .contenido {
     grid-template-columns: 1fr;
@@ -192,32 +197,33 @@ onMounted(cargarResenas)
   display: flex;
   flex-direction: column;
   gap: 14px;
-  background: #1e1e1e;
-  border: 1px solid #333;
-  border-radius: 12px;
-  padding: 20px;
+  background: var(--superficie);
+  border: 1px solid var(--borde);
+  border-radius: 16px;
+  padding: 22px;
   height: fit-content;
 }
-.formulario h2,
-.listado h2 {
+.formulario h3,
+.listado h3 {
   margin: 0 0 4px;
   font-size: 1.1rem;
+  color: var(--acento-suave);
 }
 .formulario label {
   display: flex;
   flex-direction: column;
   gap: 6px;
   font-size: 0.85rem;
-  color: #bbb;
+  color: var(--texto-muted);
 }
 .formulario input,
 .formulario textarea,
 .formulario select {
-  background: #2a2a2a;
-  border: 1px solid #444;
+  background: #16120f;
+  border: 1px solid var(--borde);
   border-radius: 8px;
-  padding: 8px 10px;
-  color: inherit;
+  padding: 9px 11px;
+  color: var(--texto);
   font-size: 0.95rem;
 }
 .formulario textarea {
@@ -237,58 +243,56 @@ onMounted(cargarResenas)
   padding: 9px 16px;
   font-size: 0.9rem;
   cursor: pointer;
-  transition: opacity 0.15s ease;
+  transition: opacity 0.15s ease, transform 0.1s ease;
+  font-family: inherit;
 }
 .btn:hover {
-  opacity: 0.85;
+  opacity: 0.88;
+  transform: translateY(-1px);
 }
 .btn-primario {
-  background: #4f8cff;
-  color: white;
+  background: var(--acento);
+  color: #1a1310;
+  font-weight: 600;
 }
 .btn-secundario {
-  background: #3a3a3a;
-  color: #ddd;
+  background: #332b26;
+  color: var(--texto);
 }
 .btn-editar {
-  background: #2f9e6e;
+  background: var(--exito);
   color: white;
 }
 .btn-eliminar {
-  background: #d9534f;
+  background: var(--peligro);
   color: white;
 }
 
 .mensaje {
-  color: #888;
+  color: var(--texto-muted);
 }
 
 .tarjeta {
-  background: #1e1e1e;
-  border: 1px solid #333;
-  border-radius: 12px;
-  padding: 16px 18px;
+  background: var(--superficie);
+  border: 1px solid var(--borde);
+  border-radius: 16px;
+  padding: 18px 20px;
   margin-bottom: 14px;
-  transition: transform 0.15s ease, border-color 0.15s ease;
+  transition: border-color 0.15s ease;
 }
 .tarjeta:hover {
-  transform: translateY(-2px);
-  border-color: #4f8cff;
+  border-color: var(--acento);
 }
-
 .tarjeta-cabecera {
   display: flex;
   justify-content: space-between;
   align-items: center;
 }
-.badge {
-  background: #2a2a2a;
-  border-radius: 999px;
-  padding: 3px 10px;
-  font-size: 0.85rem;
+.estrellas {
+  font-size: 0.9rem;
 }
 .tarjeta-plato {
-  color: #888;
+  color: var(--texto-muted);
   font-size: 0.85rem;
   margin: 4px 0 8px;
 }
